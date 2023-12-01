@@ -2,6 +2,9 @@
 #define PROBLEMA_H
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "Grafo.h"
 
 using namespace std;
@@ -24,6 +27,7 @@ public:
 
     void calculaMatrizDitancia();
     void insereArestas();
+    void auxLer(string nomeArquivo);
 
     int getNumCaminhoes(){return numCaminhoes;};
     int getSolucaoOtima(){return solucaoOtima;};
