@@ -22,7 +22,7 @@ public:
     Problema(string arquivo);
     ~Problema();
 
-    void calculaMAtrizDitancia();
+    void calculaMatrizDitancia();
     void insereArestas();
 
     int getNumCaminhoes(){return numCaminhoes;};
