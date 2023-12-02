@@ -11,6 +11,7 @@ private:
     int idNo;
     int demanda;
     bool deposito = false;
+    bool visitado = false;
     float x;
     float y;
     No *proxNo = nullptr;
@@ -25,6 +26,8 @@ public:
     int getIdNo(){return idNo;};
     int getDemanda(){return demanda;};
     int getDeposito(){return deposito;};
+    bool getVisitado(){return visitado;};
+    void setVisitado(bool visitado);
     float getX(){return x;};
     float getY(){return y;};
     No * getProxNo(){return proxNo;};

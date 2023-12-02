@@ -17,3 +17,7 @@ void No::setDemanda(int demanda){
 void No::setDeposito(){
     this->deposito = true;
 }
+
+void No::setVisitado(bool visitado){
+    this->visitado = visitado;
+}

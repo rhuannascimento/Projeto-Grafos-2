@@ -65,7 +65,7 @@ void Problema::auxLer(string nomeArquivo)
                 }
                 else if (chave == "CAPACITY")
                 {
-                    this->capacidadeDepostio = stoi(valor);
+                    this->capacidadeCaminhao = stoi(valor);
                 }
             }
             else if (chave == "NODE_COORD_SECTION")

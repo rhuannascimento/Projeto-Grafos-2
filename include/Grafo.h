@@ -6,7 +6,6 @@
 
 using namespace std;
 class No;
-class Aresta;
 
 class Grafo {
 private:
@@ -26,4 +25,4 @@ public:
 
 };
 
-#endif // ARESTA_H
+#endif // GRAFO_H
