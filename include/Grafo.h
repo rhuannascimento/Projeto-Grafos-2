@@ -19,8 +19,9 @@ public:
     Grafo();
     ~Grafo();
 
-    No *insereNo(int idNo, int x, int y);
+    No *insereNo(int idNo, float x, float y);
     No *buscaNo(int idNo);
+    No* getRaiz(){return raiz;};
     void imprimeGrafo();
 
 };

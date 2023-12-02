@@ -5,7 +5,7 @@ Grafo::Grafo(){
 
 }
 
-No *Grafo::insereNo(int idNo, int x, int y){
+No *Grafo::insereNo(int idNo, float x, float y){
 
     No *novoNo = new No(idNo, x, y);
 

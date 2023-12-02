@@ -1,6 +1,6 @@
 #include "../include/No.h"
 
-No::No(int id, int x, int y){
+No::No(int id, float x, float y){
     this->idNo = id;
     this->x = x;
     this->y = y;
