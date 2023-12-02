@@ -10,4 +10,5 @@ int main(){
     Problema *p = new Problema("instancias/1.txt");
 
     return 0;
+    
 }
