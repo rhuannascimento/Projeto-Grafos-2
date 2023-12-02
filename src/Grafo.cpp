@@ -2,7 +2,7 @@
 
 
 Grafo::Grafo(){
-    
+
 }
 
 No *Grafo::insereNo(int idNo, int x, int y){
@@ -25,7 +25,21 @@ No *Grafo::insereNo(int idNo, int x, int y){
 void Grafo::imprimeGrafo(){
     No *no = this->raiz;
     while(no != nullptr){
-        cout<< no->getIdNo() << " ";
+        cout<< no->getIdNo() << " " << no->getDemanda() << " " <<no->getDeposito() << endl;
         no = no->getProxNo();
     }
+}
+
+No* Grafo::buscaNo(int idNo){
+    No *no = this->raiz;
+
+    while(no != nullptr){
+        if(no->getIdNo() == idNo){
+            return no;
+        }
+        no = no->getProxNo();
+    } 
+
+    return nullptr;
+
 }

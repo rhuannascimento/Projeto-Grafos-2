@@ -9,3 +9,11 @@ No::No(int id, int x, int y){
 void No::setProxNo(No *no){
     this->proxNo = no;
 }
+
+void No::setDemanda(int demanda){
+    this->demanda = demanda;
+}
+
+void No::setDeposito(){
+    this->deposito = true;
+}

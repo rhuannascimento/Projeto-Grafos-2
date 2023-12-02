@@ -17,6 +17,8 @@ void Problema::auxLer(string nomeArquivo)
     string chave, valor;
     int noOfTrucks = 0, optimalValue = 0, dimension = 0, capacity = 0;
     bool leituraCoords = false;
+    bool leituraDemanda = false;
+    bool leituraDeposito = false;
 
     while (getline(arquivo, linha))
     {
@@ -63,6 +65,10 @@ void Problema::auxLer(string nomeArquivo)
             else if (chave == "DEMAND_SECTION")
             {
                 leituraCoords = false;
+                leituraDemanda = true;
+            }else if(chave == "DEPOT_SECTION"){
+                leituraDemanda = false;
+                leituraDeposito = true;
             }
             else if (leituraCoords)
             {
@@ -70,6 +76,20 @@ void Problema::auxLer(string nomeArquivo)
                 id = stoi(chave);
                 iss >> x >> y;  
                 this->g->insereNo(id, x, y);
+            }
+            else if (leituraDemanda)
+            {
+                int id, demanda;
+                id = stoi(chave);
+                iss >> demanda;  
+                No *no = this->g->buscaNo(id);
+                no->setDemanda(demanda);
+            }else if(leituraDeposito){
+                int id; 
+                id = stoi(chave);
+                No *no = this->g->buscaNo(id);
+                no->setDeposito();
+                leituraDeposito = false;
             }
         }
     }
@@ -83,5 +103,6 @@ Problema::Problema(string nomeArquivo)
     this->g = new Grafo();
     this->auxLer(nomeArquivo);
     this->g->imprimeGrafo();
+    
     
 }
