@@ -80,7 +80,8 @@ void Problema::auxLer(string nomeArquivo)
 Problema::Problema(string nomeArquivo)
 {
 
-    
-
+    this->g = new Grafo();
+    this->auxLer(nomeArquivo);
+    this->g->imprimeGrafo();
     
 }

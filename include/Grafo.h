@@ -21,6 +21,7 @@ public:
 
     No *insereNo(int idNo, int x, int y);
     No *buscaNo(int idNo);
+    void imprimeGrafo();
 
 };
 
