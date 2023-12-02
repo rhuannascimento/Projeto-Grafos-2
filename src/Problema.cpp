@@ -3,6 +3,17 @@
 using namespace std;
 
 
+Problema::Problema(string nomeArquivo)
+{
+
+    this->g = new Grafo();
+    this->auxLer(nomeArquivo);
+    //this->g->imprimeGrafo();
+
+    
+}
+
+
 void Problema::auxLer(string nomeArquivo)
 {
     ifstream arquivo(nomeArquivo);
@@ -95,14 +106,4 @@ void Problema::auxLer(string nomeArquivo)
     }
 
     arquivo.close();
-}
-
-Problema::Problema(string nomeArquivo)
-{
-
-    this->g = new Grafo();
-    this->auxLer(nomeArquivo);
-    this->g->imprimeGrafo();
-    
-    
 }
