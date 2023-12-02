@@ -26,7 +26,6 @@ void Problema::auxLer(string nomeArquivo)
 
     string linha;
     string chave, valor;
-    int noOfTrucks = 0, optimalValue = 0, dimension = 0, capacity = 0;
     bool leituraCoords = false;
     bool leituraDemanda = false;
     bool leituraDeposito = false;
@@ -51,22 +50,22 @@ void Problema::auxLer(string nomeArquivo)
                         if (valor == "trucks:")
                         {
                             iss >> valor;
-                            noOfTrucks = stoi(valor);
+                            this->numCaminhoes = stoi(valor);
                         }
                         else if (valor == "value:")
                         {
                             iss >> valor;
-                            optimalValue = stoi(valor);
+                            this->solucaoOtima = stoi(valor);
                         }
                     }
                 }
                 else if (chave == "DIMENSION")
                 {
-                    dimension = stoi(valor);
+                    this->dimensao = stoi(valor);
                 }
                 else if (chave == "CAPACITY")
                 {
-                    capacity = stoi(valor);
+                    this->capacidadeDepostio = stoi(valor);
                 }
             }
             else if (chave == "NODE_COORD_SECTION")
@@ -118,6 +117,7 @@ float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float 
 void Problema::calculaMatrizDitancia(){
 
     this->matrizDistancia = vector<vector<float>>(this->dimensao, vector<float>(this->dimensao));
+    
 
     No *atual = this->g->getRaiz();
 
@@ -129,7 +129,6 @@ void Problema::calculaMatrizDitancia(){
             }else{
                 this->matrizDistancia[atual->getIdNo() - 1][comparacao->getIdNo() - 1] = 0.0;
             }
-            cout<< this->matrizDistancia[atual->getIdNo() - 1][comparacao->getIdNo() - 1] << endl;
             comparacao = comparacao->getProxNo();
         }
         atual = atual->getProxNo();
