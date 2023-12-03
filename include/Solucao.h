@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <algorithm>
 //#include "Aresta.h"
 #include "Problema.h"
 #include "No.h"
@@ -31,7 +32,7 @@ public:
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
-    //vector<Aresta> gulosoReativo();
+    vector<vector<int>> gulosoReativo();
     
 };
 

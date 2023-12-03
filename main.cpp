@@ -10,7 +10,6 @@ int main()
 {
     int menu = 0;
 
-    cout << "escolha uma opcao de algoritmo:" << endl;
     while (menu != 9)
     {
         cout << "====================================================================================================================================================" << endl;
@@ -21,61 +20,61 @@ int main()
         cout << "|9| Sair" << endl;
         cin >> menu;
 
-        switch (menu)
+        for (int x = 1; x <= 10; x++)
         {
-        case 1:
-            for (int x = 1; x <= 10; x++)
+            cout << "==========================================================Instancia " << x << "===============================================================================================" << endl;
+            Problema *p = new Problema("instancias/" + to_string(x) + ".txt");
+            Solucao *s = new Solucao(p);
+            vector<vector<int>> rotas;
+            switch (menu)
             {
-                cout << "==========================================================Instancia " << x << "===============================================================================================" << endl;
-                Problema *p = new Problema("instancias/" + to_string(x) + ".txt");
-                Solucao *s = new Solucao(p);
-                vector<vector<int>> rotas = s->guloso();
-                Valida *v = new Valida(s, p);
+            case 1:
+                rotas = s->guloso();
+                break;
+            case 2:
+                rotas = s->guloso();
+                break;
+            case 3:
+                rotas = s->guloso();
+                break;
+            }
+            Valida *v = new Valida(s, p);
 
-                for (size_t i = 0; i < rotas.size(); ++i)
+            for (size_t i = 0; i < rotas.size(); ++i)
+            {
+                cout << "Rota " << i + 1 << ": ";
+                for (size_t j = 0; j < rotas[i].size(); ++j)
                 {
-                    cout << "Rota " << i + 1 << ": ";
-                    for (size_t j = 0; j < rotas[i].size(); ++j)
+                    if (j == rotas[i].size() - 2)
                     {
-                        if (j == rotas[i].size() - 2)
-                        {
-                            cout << "Capacidade sobrando: ";
-                        }
-                        else if (j == rotas[i].size() - 1)
-                        {
-                            cout << "Custo da rota: ";
-                        }
-
-                        cout
-                            << rotas[i][j] << " ";
+                        cout << "Capacidade sobrando: ";
                     }
+                    else if (j == rotas[i].size() - 1)
+                    {
+                        cout << "Custo da rota: ";
+                    }
+
                     cout
-                        << endl;
+                        << rotas[i][j] << " ";
                 }
                 cout
-                    << "Custo Total: " << s->getCustoTotal() << endl;
-                cout << "Solucao Otimo: " << p->getSolucaoOtima() << endl;
+                    << endl;
+            }
+            cout
+                << "Custo Total: " << s->getCustoTotal() << endl;
+            cout << "Solucao Otimo: " << p->getSolucaoOtima() << endl;
 
-                if (!v->validar())
+            if (!v->validar())
+            {
+                if (!v->getAtendeuTodos())
                 {
-                    if (!v->getAtendeuTodos())
-                    {
-                        cout << "A solução não atendeu todos os clientes!" << endl;
-                    }
-                    if (!v->getUnicoEmRota())
-                    {
-                        cout << "Os nós não são únicos nas rotas!" << endl;
-                    }
+                    cout << "A solução não atendeu todos os clientes!" << endl;
+                }
+                if (!v->getUnicoEmRota())
+                {
+                    cout << "Os nós não são únicos nas rotas!" << endl;
                 }
             }
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-
-            break;
         }
     }
 
