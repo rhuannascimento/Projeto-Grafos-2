@@ -1,4 +1,4 @@
-#ifndef SOLCUAO_H
+#ifndef SOLUCAO_H
 #define SOLUCAO_H
 #include <iostream>
 #include <vector>
@@ -19,6 +19,7 @@ private:
     Problema *p;
     float comparacao;
     float custoTotal = 0;
+    vector<vector<int>> resultado;
 
 public:
     
@@ -26,6 +27,7 @@ public:
     ~Solucao();
 
     vector<vector<int>> guloso();
+    vector<vector<int>> getResultado(){return resultado;};
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
@@ -33,4 +35,4 @@ public:
     
 };
 
-#endif // SOLCUAO_H
+#endif // SOLUCAO_H

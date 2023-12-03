@@ -1,6 +1,7 @@
 #include <iostream>
 #include "./include/Problema.h"
 #include "./include/Solucao.h"
+#include "./include/Valida.h"
 #include <string>
 
 using namespace std;
@@ -13,8 +14,8 @@ int main()
         cout << "==========================================================Instancia " << x << "===============================================================================================" << endl;
         Problema *p = new Problema("instancias/" + to_string(x) + ".txt");
         Solucao *s = new Solucao(p);
-
         vector<vector<int>> rotas = s->guloso();
+        Valida *v = new Valida(s, p);
 
         for (size_t i = 0; i < rotas.size(); ++i)
         {
@@ -34,6 +35,15 @@ int main()
         }
         cout<<"Custo Total: "<<s->getCustoTotal()<<endl;
         cout<<"Solucao Otimo: "<<p->getSolucaoOtima()<<endl;
+
+        if(!v->validar()){
+            if(!v->getAtendeuTodos()){
+                cout<<"A solução não atendeu todos os clientes!"<<endl;
+            }
+            if(!v->getUnicoEmRota()){
+                cout<<"Os nós não são únicos nas rotas!"<<endl;
+            }
+        }
     }
     return 0;
 }
