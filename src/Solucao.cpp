@@ -71,11 +71,12 @@ vector<vector<int>> Solucao::guloso() {
 
     while(n != nullptr){
         if(n->getVisitado() == false){
-            cout<<"Solução invalida, nó "<< n->getIdNo() << "não visistado!" <<endl;
+            cout<<"Solução invalida, nó "<< n->getIdNo() << " não visistado!" <<endl;
         }
         n = n->getProxNo();
     }
  
+    this->resultado = resultado;
 
-    return resultado;
+    return this->resultado;
 }
