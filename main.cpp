@@ -10,7 +10,6 @@ int main()
 {
     int menu = 0;
 
-    cout << "escolha uma opcao de algoritmo:" << endl;
     while (menu != 9)
     {
         cout << "====================================================================================================================================================" << endl;
@@ -20,16 +19,27 @@ int main()
         cout << "|3| Algoritmo Guloso randomizado adaptativo reativo" << endl;
         cout << "|9| Sair" << endl;
         cin >> menu;
-
-        switch (menu)
+        if (menu!=9)
         {
-        case 1:
+
             for (int x = 1; x <= 10; x++)
             {
                 cout << "==========================================================Instancia " << x << "===============================================================================================" << endl;
                 Problema *p = new Problema("instancias/" + to_string(x) + ".txt");
                 Solucao *s = new Solucao(p);
-                vector<vector<int>> rotas = s->guloso();
+                vector<vector<int>> rotas;
+                switch (menu)
+                {
+                case 1:
+                    rotas = s->guloso();
+                    break;
+                case 2:
+                    rotas = s->gulosoRandomizadoAdaptativo();
+                    break;
+                case 3:
+                    //rotas = s->gulosoReativo();
+                    break;
+                }
                 Valida *v = new Valida(s, p);
 
                 for (size_t i = 0; i < rotas.size(); ++i)
@@ -68,14 +78,6 @@ int main()
                     }
                 }
             }
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-
-            break;
         }
     }
 

@@ -6,6 +6,11 @@
 //#include "Aresta.h"
 #include "Problema.h"
 #include "No.h"
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
+
 
 using namespace std;
 class Problema;
@@ -32,6 +37,9 @@ public:
     float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
     //vector<Aresta> gulosoReativo();
+
+    vector<vector<int>> gulosoRandomizadoAdaptativo();
+    float getAleatorio() { return static_cast<float>(rand()) / RAND_MAX; }
     
 };
 
