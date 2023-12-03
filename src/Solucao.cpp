@@ -4,65 +4,78 @@ Solucao::Solucao(Problema *p){
     this->p = p;
 }
 
+struct Rota {
+    vector<int> nos;
+    int capacidadeAtual;
+};
+
 vector<vector<int>> Solucao::guloso() {
-    int capacidade = p->getCapacidadeCaminhao();
     int numCaminhoes = p->getNumCaminhoes();
-    int dimensao = p->getDimensao();
+    int capacidadeCaminhao = p->getCapacidadeCaminhao();
+    Grafo *grafo = p->getGrafo();
     vector<vector<float>> matrizDistancia = p->getMatrizDistancia();
 
-    vector<bool> visitado(dimensao, false);
-    vector<vector<int>> rotas(numCaminhoes + 1, vector<int>());
+    vector<Rota> rotas(numCaminhoes);
 
-    float custoTotal = 0.0;
+    No *deposito = grafo->getRaiz();
+    deposito->setVisitado(true);
 
-    for (int i = 0; i < numCaminhoes; ++i) {
-        int cargaAtual = 0;
-        int atual = 0; 
+    for (int i = 0; i < numCaminhoes; i++) {
+        rotas[i].nos.push_back(deposito->getIdNo()); 
+        rotas[i].capacidadeAtual = capacidadeCaminhao; 
+    }
 
-        float custoAtual = 0;
+    for (int i = 0; i < numCaminhoes; i++) {
+        No *noAtual = deposito; 
+
+
+        int custoDaRota = 0;
         while (true) {
-            visitado[atual] = true;
-            rotas[i].push_back(atual + 1);
-            cargaAtual += p->getGrafo()->buscaNo(atual + 1)->getDemanda();
-            //rotas[i].push_back(cargaAtual);
-
-            int melhorVizinho = -1;
             float menorDistancia = numeric_limits<float>::max();
-
-            for (int j = 0; j < dimensao; ++j) {
-                if (!visitado[j] && matrizDistancia[atual][j] < menorDistancia &&
-                    cargaAtual + p->getGrafo()->buscaNo(j+1)->getDemanda() < capacidade) {
-                    menorDistancia = matrizDistancia[atual][j];
-                    melhorVizinho = j;
+            int proxNo = -1;
+            
+            for (int j = 1; j <= p->getDimensao(); j++) {
+                No *possivelProximoNo = grafo->buscaNo(j);
+                if (!possivelProximoNo->getVisitado() && matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1] < menorDistancia &&
+                    possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
+                    menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
+                    proxNo = possivelProximoNo->getIdNo();
+                    custoDaRota += menorDistancia;
                 }
             }
 
-            if (melhorVizinho == -1) {
-                custoTotal += matrizDistancia[atual][0];
-                rotas[i].push_back(1);
-                rotas[i].push_back(custoAtual);
-                rotas[i].push_back(cargaAtual);
+            if (proxNo == -1) {
+                rotas[i].nos.push_back(deposito->getIdNo());
                 break;
             }
 
-            custoAtual += menorDistancia;
-            custoTotal += menorDistancia; 
-            atual = melhorVizinho;
-            
+            No *proximoNo = grafo->buscaNo(proxNo);
+            proximoNo->setVisitado(true);
+            rotas[i].nos.push_back(proximoNo->getIdNo());
+            rotas[i].capacidadeAtual -= proximoNo->getDemanda();
+            noAtual = proximoNo;
         }
+
+        rotas[i].nos.push_back(rotas[i].capacidadeAtual);
+        rotas[i].nos.push_back(custoDaRota);
+        this->custoTotal += custoDaRota;
+ 
     }
 
-    for(int i = 0; i<dimensao; i++){
-        if(visitado[i] == false){
-            cout<<"Solução invalida! "<< "Nó " << i+1 << " não incluido!"<<endl;
-        }
+    vector<vector<int>> resultado;
+    for (const auto &rota : rotas) {
+        resultado.push_back(rota.nos);
     }
 
-   
-    this->comparacao = (custoTotal - this->p->getSolucaoOtima())/this->p->getSolucaoOtima();
+    No *n = p->getGrafo()->getRaiz();
 
-    rotas[numCaminhoes].push_back(custoTotal);
-    
+    while(n != nullptr){
+        if(n->getVisitado() == false){
+            cout<<"Solução invalida, nó "<< n->getIdNo() << "não visistado!" <<endl;
+        }
+        n = n->getProxNo();
+    }
+ 
 
-    return rotas;
+    return resultado;
 }

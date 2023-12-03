@@ -18,6 +18,7 @@ private:
     //vector<Aresta> resultado;
     Problema *p;
     float comparacao;
+    float custoTotal = 0;
 
 public:
     
@@ -26,6 +27,7 @@ public:
 
     vector<vector<int>> guloso();
     float getComparacao(){return comparacao;};
+    float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
     //vector<Aresta> gulosoReativo();
     
