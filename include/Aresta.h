@@ -6,25 +6,25 @@
 using namespace std;
 class No;
 
-class Aresta {
+class Aresta
+{
 private:
     float distancia;
     int idNoDestino;
     int idNoOrigem;
 
-    Aresta* proxAresta = nullptr;
+    Aresta *proxAresta = nullptr;
 
-public: 
+public:
     Aresta(int idNoDestino, int idNoOrigem, float distancia);
     ~Aresta();
 
-    float getDistancia(){return distancia;};
-    int getIdNoDestino(){return idNoDestino;};
-    int getIdNoOrigem(){return idNoOrigem;};
-    Aresta *getProxAresta(){return proxAresta;};
+    float getDistancia() { return distancia; };
+    int getIdNoDestino() { return idNoDestino; };
+    int getIdNoOrigem() { return idNoOrigem; };
+    Aresta *getProxAresta() { return proxAresta; };
 
     void setProxAresta();
-    
 };
 
 #endif // ARESTA_H

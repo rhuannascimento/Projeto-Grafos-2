@@ -7,9 +7,9 @@
 using namespace std;
 class No;
 
-class Grafo {
+class Grafo
+{
 private:
-    
     No *raiz = nullptr;
     No *ultimoNo = nullptr;
     int ordem;
@@ -20,9 +20,8 @@ public:
 
     No *insereNo(int idNo, float x, float y);
     No *buscaNo(int idNo);
-    No* getRaiz(){return raiz;};
+    No *getRaiz() { return raiz; };
     void imprimeGrafo();
-
 };
 
 #endif // GRAFO_H

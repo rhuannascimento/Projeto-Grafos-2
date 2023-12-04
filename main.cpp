@@ -19,7 +19,7 @@ int main()
         cout << "|3| Algoritmo Guloso randomizado adaptativo reativo" << endl;
         cout << "|9| Sair" << endl;
         cin >> menu;
-        if (menu!=9)
+        if (menu != 9)
         {
 
             for (int x = 1; x <= 10; x++)
@@ -34,7 +34,7 @@ int main()
                     rotas = s->guloso();
                     break;
                 case 2:
-                    //rotas = s->gulosoAdptativo();
+                    // rotas = s->gulosoAdptativo();
                     break;
                 case 3:
                     rotas = s->gulosoReativo(0.1);

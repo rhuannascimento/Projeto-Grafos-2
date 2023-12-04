@@ -2,22 +2,19 @@
 
 using namespace std;
 
-
 Problema::Problema(string nomeArquivo)
 {
 
     this->g = new Grafo();
     this->auxLer(nomeArquivo);
-    //this->g->imprimeGrafo();
+    // this->g->imprimeGrafo();
     this->calculaMatrizDitancia();
-    
 }
-
 
 void Problema::auxLer(string nomeArquivo)
 {
     ifstream arquivo(nomeArquivo);
-    
+
     if (!arquivo.is_open())
     {
         cerr << "Erro ao abrir o arquivo." << endl;
@@ -76,27 +73,31 @@ void Problema::auxLer(string nomeArquivo)
             {
                 leituraCoords = false;
                 leituraDemanda = true;
-            }else if(chave == "DEPOT_SECTION"){
+            }
+            else if (chave == "DEPOT_SECTION")
+            {
                 leituraDemanda = false;
                 leituraDeposito = true;
             }
             else if (leituraCoords)
             {
-                int id; 
+                int id;
                 float x, y;
                 id = stoi(chave);
-                iss >> x >> y;  
+                iss >> x >> y;
                 this->g->insereNo(id, x, y);
             }
             else if (leituraDemanda)
             {
                 int id, demanda;
                 id = stoi(chave);
-                iss >> demanda;  
+                iss >> demanda;
                 No *no = this->g->buscaNo(id);
                 no->setDemanda(demanda);
-            }else if(leituraDeposito){
-                int id; 
+            }
+            else if (leituraDeposito)
+            {
+                int id;
                 id = stoi(chave);
                 No *no = this->g->buscaNo(id);
                 no->setDeposito();
@@ -108,30 +109,33 @@ void Problema::auxLer(string nomeArquivo)
     arquivo.close();
 }
 
-
-float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2) {
+float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2)
+{
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
-
-void Problema::calculaMatrizDitancia(){
+void Problema::calculaMatrizDitancia()
+{
 
     this->matrizDistancia = vector<vector<float>>(this->dimensao, vector<float>(this->dimensao));
-    
 
     No *atual = this->g->getRaiz();
 
-    while(atual != nullptr){
+    while (atual != nullptr)
+    {
         No *comparacao = this->g->getRaiz();
-        while(comparacao != nullptr){
-            if(comparacao->getIdNo() != atual->getIdNo()){
+        while (comparacao != nullptr)
+        {
+            if (comparacao->getIdNo() != atual->getIdNo())
+            {
                 this->matrizDistancia[atual->getIdNo() - 1][comparacao->getIdNo() - 1] = this->calcularDistanciaEuclidiana(atual->getX(), atual->getY(), comparacao->getX(), comparacao->getY());
-            }else{
+            }
+            else
+            {
                 this->matrizDistancia[atual->getIdNo() - 1][comparacao->getIdNo() - 1] = 0.0;
             }
             comparacao = comparacao->getProxNo();
         }
         atual = atual->getProxNo();
     }
-
 }

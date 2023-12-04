@@ -11,18 +11,17 @@
 using namespace std;
 class Grafo;
 
-class Problema {
+class Problema
+{
 private:
-    
     int numCaminhoes;
     int solucaoOtima;
     int dimensao;
     int capacidadeCaminhao;
-    vector<vector <float>> matrizDistancia;
+    vector<vector<float>> matrizDistancia;
     Grafo *g = nullptr;
 
 public:
-    
     Problema(string arquivo);
     ~Problema();
 
@@ -31,13 +30,12 @@ public:
     void insereArestas();
     void auxLer(string nomeArquivo);
 
-    int getNumCaminhoes(){return numCaminhoes;};
-    int getSolucaoOtima(){return solucaoOtima;};
-    int getDimensao(){return dimensao;};
-    int getCapacidadeCaminhao(){return capacidadeCaminhao;};
-    vector<vector <float>> getMatrizDistancia(){return matrizDistancia;};
-    Grafo *getGrafo(){return g;};
-    
+    int getNumCaminhoes() { return numCaminhoes; };
+    int getSolucaoOtima() { return solucaoOtima; };
+    int getDimensao() { return dimensao; };
+    int getCapacidadeCaminhao() { return capacidadeCaminhao; };
+    vector<vector<float>> getMatrizDistancia() { return matrizDistancia; };
+    Grafo *getGrafo() { return g; };
 };
 
 #endif // PROBLEMA_H

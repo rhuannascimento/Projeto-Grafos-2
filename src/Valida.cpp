@@ -1,23 +1,25 @@
 #include "../include/Valida.h"
 
-Valida::Valida(Solucao *s, Problema *p){
+Valida::Valida(Solucao *s, Problema *p)
+{
     this->s = s;
     this->p = p;
 }
 
-
-bool Valida::validar(){
+bool Valida::validar()
+{
     this->validarTodosPresente();
     this->validarUnicoDeRota();
-    if(this->atendeuTodos &&  this->unicoEmRota){
+    if (this->atendeuTodos && this->unicoEmRota)
+    {
         return true;
     }
 
     return false;
 }
 
-
-bool Valida::validarTodosPresente(){
+bool Valida::validarTodosPresente()
+{
     Grafo *g = this->p->getGrafo();
     vector<vector<int>> resultado = this->s->getResultado();
 
@@ -31,38 +33,37 @@ bool Valida::validarTodosPresente(){
         {
             for (int j = 0; j < resultado[i].size() - 2; j++)
             {
-                if(no->getIdNo() == resultado[i][j]){
+                if (no->getIdNo() == resultado[i][j])
+                {
                     encontrado = true;
                     break;
                 }
             }
-            if(encontrado){
+            if (encontrado)
+            {
                 break;
             }
         }
 
-        if(!encontrado){
+        if (!encontrado)
+        {
             return false;
         }
 
         no = no->getProxNo();
-        
     }
-    
 
     this->atendeuTodos = true;
     return true;
-
 }
 
-
-bool Valida::validarUnicoDeRota(){
+bool Valida::validarUnicoDeRota()
+{
     Grafo *g = this->p->getGrafo();
     vector<vector<int>> resultado = this->s->getResultado();
 
     int contador = 0;
     No *no = g->getRaiz();
-
 
     while (no != nullptr)
     {
@@ -71,10 +72,12 @@ bool Valida::validarUnicoDeRota(){
         {
             for (int j = 0; j < resultado[i].size() - 2; j++)
             {
-                if(no->getIdNo() == resultado[i][j] && !no->getDeposito()){
+                if (no->getIdNo() == resultado[i][j] && !no->getDeposito())
+                {
                     contador++;
                 }
-                if(contador > 1){
+                if (contador > 1)
+                {
                     return false;
                 }
             }
@@ -84,5 +87,4 @@ bool Valida::validarUnicoDeRota(){
 
     this->unicoEmRota = true;
     return true;
-
 }

@@ -5,44 +5,40 @@
 #include <limits>
 #include <algorithm>
 #include <random>
-//#include "Aresta.h"
+// #include "Aresta.h"
 #include "Problema.h"
 #include "No.h"
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
 
-
-
 using namespace std;
 class Problema;
 class No;
-//class Aresta;
+// class Aresta;
 
-class Solucao {
+class Solucao
+{
 private:
-    
-    //vector<Aresta> resultado;
+    // vector<Aresta> resultado;
     Problema *p;
     float comparacao;
     float custoTotal = 0;
     vector<vector<int>> resultado;
 
 public:
-    
     Solucao(Problema *p);
     ~Solucao();
 
+    vector<vector<int>> getResultado() { return resultado; };
+    float getComparacao() { return comparacao; };
+    float getCustoTotal() { return custoTotal; };
     vector<vector<int>> guloso();
-    vector<vector<int>> getResultado(){return resultado;};
-    float getComparacao(){return comparacao;};
-    float getCustoTotal(){return custoTotal;};
-    //vector<Aresta> gulosoAdptativo();
+    vector<vector<int>> gulosoAdptativo();
+
     vector<vector<int>> gulosoReativo(float parametroReativo);
 
-    vector<vector<int>> gulosoAdptativo();
     float getAleatorio() { return static_cast<float>(rand()) / RAND_MAX; }
-    
 };
 
 #endif // SOLUCAO_H
