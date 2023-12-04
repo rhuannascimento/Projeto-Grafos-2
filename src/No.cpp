@@ -1,6 +1,6 @@
 #include "../include/No.h"
 
-No::No(int id, int x, int y){
+No::No(int id, float x, float y){
     this->idNo = id;
     this->x = x;
     this->y = y;
@@ -8,4 +8,16 @@ No::No(int id, int x, int y){
 
 void No::setProxNo(No *no){
     this->proxNo = no;
+}
+
+void No::setDemanda(int demanda){
+    this->demanda = demanda;
+}
+
+void No::setDeposito(){
+    this->deposito = true;
+}
+
+void No::setVisitado(bool visitado){
+    this->visitado = visitado;
 }

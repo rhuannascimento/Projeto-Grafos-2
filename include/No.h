@@ -10,27 +10,34 @@ class No {
 private:
     int idNo;
     int demanda;
-    int x;
-    int y;
+    bool deposito = false;
+    bool visitado = false;
+    float x;
+    float y;
     No *proxNo = nullptr;
     Aresta *primeiraAresta = nullptr;
     Aresta *ultimaAresta = nullptr;
 
 public:
 
-    No(int idNo, int x, int y);
+    No(int idNo, float x, float y);
     ~No();
 
     int getIdNo(){return idNo;};
     int getDemanda(){return demanda;};
-    int getX(){return x;};
-    int getY(){return y;};
+    int getDeposito(){return deposito;};
+    bool getVisitado(){return visitado;};
+    void setVisitado(bool visitado);
+    float getX(){return x;};
+    float getY(){return y;};
     No * getProxNo(){return proxNo;};
     Aresta * getPrimeiraAresta(){return primeiraAresta;}
     Aresta * getUltimaAresta(){return ultimaAresta;}
 
     void setProxNo(No *no);
-    Aresta * insertAresta(int destino, int peso);
+    void setDemanda(int demanda);
+    void setDeposito();
+    Aresta * insertAresta(int destino, float peso);
 };
 
 #endif // NO_H

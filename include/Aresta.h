@@ -8,17 +8,17 @@ class No;
 
 class Aresta {
 private:
-    int distancia;
+    float distancia;
     int idNoDestino;
     int idNoOrigem;
 
     Aresta* proxAresta = nullptr;
 
-public:
-    Aresta(int idNoDestino, int idNoOrigem, int distancia);
+public: 
+    Aresta(int idNoDestino, int idNoOrigem, float distancia);
     ~Aresta();
 
-    int getDistancia(){return distancia;};
+    float getDistancia(){return distancia;};
     int getIdNoDestino(){return idNoDestino;};
     int getIdNoOrigem(){return idNoOrigem;};
     Aresta *getProxAresta(){return proxAresta;};
