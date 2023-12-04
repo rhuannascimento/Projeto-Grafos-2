@@ -40,14 +40,19 @@ vector<vector<int>> Solucao::guloso() {
                     possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
                     menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
                     proxNo = possivelProximoNo->getIdNo();
-                    custoDaRota += menorDistancia;
+                    
                 }
             }
 
+            
+
             if (proxNo == -1) {
+                custoDaRota += matrizDistancia[noAtual->getIdNo() - 1][deposito->getIdNo() - 1];
                 rotas[i].nos.push_back(deposito->getIdNo());
                 break;
             }
+
+            custoDaRota += menorDistancia;
 
             No *proximoNo = grafo->buscaNo(proxNo);
             proximoNo->setVisitado(true);
@@ -135,7 +140,7 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroAlpha, float parametro
                     if (distancia < menorDistancia) {
                         menorDistancia = distancia;
                         proxNo = possivelProximoNo->getIdNo();
-                        custoDaRota += menorDistancia;
+                        
                     }
                 }
                 contadorCandidatos++;
@@ -143,9 +148,12 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroAlpha, float parametro
             }
 
             if (proxNo == -1) {
+                custoDaRota += matrizDistancia[noAtual->getIdNo() - 1][deposito->getIdNo() -1];
                 rotas[i].nos.push_back(deposito->getIdNo());
                 break;
             }
+
+            custoDaRota += menorDistancia;
 
             No *proximoNo = grafo->buscaNo(proxNo);
             proximoNo->setVisitado(true);
