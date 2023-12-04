@@ -34,10 +34,10 @@ int main()
                     rotas = s->guloso();
                     break;
                 case 2:
-                    rotas = s->gulosoRandomizadoAdaptativo();
+                    rotas = s->guloso();
                     break;
                 case 3:
-                    //rotas = s->gulosoReativo();
+                    rotas = s->gulosoReativo(0.1);
                     break;
                 }
                 Valida *v = new Valida(s, p);

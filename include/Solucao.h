@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <algorithm>
+#include <random>
 //#include "Aresta.h"
 #include "Problema.h"
 #include "No.h"
@@ -36,7 +38,7 @@ public:
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
-    //vector<Aresta> gulosoReativo();
+    vector<vector<int>> gulosoReativo(float parametroReativo);
 
     vector<vector<int>> gulosoRandomizadoAdaptativo();
     float getAleatorio() { return static_cast<float>(rand()) / RAND_MAX; }

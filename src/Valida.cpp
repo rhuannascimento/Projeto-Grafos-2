@@ -7,7 +7,9 @@ Valida::Valida(Solucao *s, Problema *p){
 
 
 bool Valida::validar(){
-    if(this->validarTodosPresente() && this->validarUnicoDeRota()){
+    this->validarTodosPresente();
+    this->validarUnicoDeRota();
+    if(this->atendeuTodos &&  this->unicoEmRota){
         return true;
     }
 
