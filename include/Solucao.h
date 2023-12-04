@@ -40,7 +40,7 @@ public:
     //vector<Aresta> gulosoAdptativo();
     vector<vector<int>> gulosoReativo(float parametroReativo);
 
-    vector<vector<int>> gulosoRandomizadoAdaptativo();
+    vector<vector<int>> gulosoAdptativo();
     float getAleatorio() { return static_cast<float>(rand()) / RAND_MAX; }
     
 };
