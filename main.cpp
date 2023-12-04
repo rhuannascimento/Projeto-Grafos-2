@@ -37,7 +37,7 @@ int main()
                     rotas = s->guloso();
                     break;
                 case 3:
-                    rotas = s->gulosoReativo(0.1);
+                    rotas = s->gulosoReativo(8.5, 7.3, 20);
                     break;
                 }
                 Valida *v = new Valida(s, p);

@@ -82,7 +82,8 @@ vector<vector<int>> Solucao::guloso() {
 }
 
 
-vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
+
+vector<vector<int>> Solucao::gulosoReativo(float parametroAlpha, float parametroProbabilidadeInicial, int parametroTamanhoListaCandidatos) {
     int numCaminhoes = p->getNumCaminhoes();
     int capacidadeCaminhao = p->getCapacidadeCaminhao();
     Grafo *grafo = p->getGrafo();
@@ -93,8 +94,9 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
     No *deposito = grafo->getRaiz();
     deposito->setVisitado(true);
 
-    float alfa = parametroReativo; // Fator de influência da atualização da probabilidade
-    vector<float> probabilidades(p->getDimensao(), 1.0); // Inicialmente, todas as probabilidades são iguais
+    float alpha = parametroAlpha; // Taxa de aprendizado
+    float probabilidadeInicial = parametroProbabilidadeInicial; // Probabilidade inicial de escolha
+    int tamanhoListaCandidatos = parametroTamanhoListaCandidatos; // Tamanho da lista de candidatos
 
     for (int i = 0; i < numCaminhoes; i++) {
         rotas[i].nos.push_back(deposito->getIdNo()); 
@@ -108,30 +110,36 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
         while (true) {
             float menorDistancia = numeric_limits<float>::max();
             int proxNo = -1;
-            float somaProbabilidades = 0.0;
+
+            vector<int> candidatos;
 
             for (int j = 1; j <= p->getDimensao(); j++) {
                 No *possivelProximoNo = grafo->buscaNo(j);
                 if (!possivelProximoNo->getVisitado() && possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
-                    menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
-                    somaProbabilidades += probabilidades[j - 1];
+                    candidatos.push_back(possivelProximoNo->getIdNo());
                 }
             }
 
-            float escolhaAleatoria = static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * somaProbabilidades;
+            // Embaralhar a lista de candidatos
+            random_shuffle(candidatos.begin(), candidatos.end());
 
-            float acumuladorProbabilidades = 0.0;
-            for (int j = 1; j <= p->getDimensao(); j++) {
-                No *possivelProximoNo = grafo->buscaNo(j);
-                if (!possivelProximoNo->getVisitado() && possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
-                    menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
-                    acumuladorProbabilidades += probabilidades[j - 1];
-                    if (acumuladorProbabilidades >= escolhaAleatoria) {
+            int contadorCandidatos = 0;
+            float probabilidade = probabilidadeInicial;
+
+            // Escolha adaptativa reativa
+            while (contadorCandidatos < tamanhoListaCandidatos && contadorCandidatos < candidatos.size()) {
+                float prob = (float)rand() / RAND_MAX;
+                if (prob < probabilidade) {
+                    No *possivelProximoNo = grafo->buscaNo(candidatos[contadorCandidatos]);
+                    float distancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
+                    if (distancia < menorDistancia) {
+                        menorDistancia = distancia;
                         proxNo = possivelProximoNo->getIdNo();
                         custoDaRota += menorDistancia;
-                        break;
                     }
                 }
+                contadorCandidatos++;
+                probabilidade = (1 - alpha) * probabilidade + alpha * (1 - probabilidade);
             }
 
             if (proxNo == -1) {
@@ -144,14 +152,6 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
             rotas[i].nos.push_back(proximoNo->getIdNo());
             rotas[i].capacidadeAtual -= proximoNo->getDemanda();
             noAtual = proximoNo;
-
-            for (int j = 1; j <= p->getDimensao(); j++) {
-                No *possivelProximoNo = grafo->buscaNo(j);
-                if (!possivelProximoNo->getVisitado() && possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
-                    float delta = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1] / custoDaRota;
-                    probabilidades[j - 1] = (1 - alfa) * probabilidades[j - 1] + alfa * delta;
-                }
-            }
         }
 
         rotas[i].nos.push_back(rotas[i].capacidadeAtual);
@@ -165,7 +165,6 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
     }
 
     No *n = p->getGrafo()->getRaiz();
-
     while(n != nullptr){
         if(n->getVisitado() == false){
             cout<<"Solução inválida, nó "<< n->getIdNo() << " não visitado!" <<endl;
@@ -174,11 +173,78 @@ vector<vector<int>> Solucao::gulosoReativo(float parametroReativo) {
     }
  
     this->resultado = resultado;
-
     return this->resultado;
 }
 
 
+/*vector<vector<int>> Solucao::guloso() {
+    int numCaminhoes = p->getNumCaminhoes();
+    int capacidadeCaminhao = p->getCapacidadeCaminhao();
+    Grafo *grafo = p->getGrafo();
+    vector<vector<float>> matrizDistancia = p->getMatrizDistancia();
+
+    vector<Rota> rotas(numCaminhoes);
+
+    No *deposito = grafo->getRaiz();
+    deposito->setVisitado(true);
+
+    for (int i = 0; i < numCaminhoes; i++) {
+        rotas[i].nos.push_back(deposito->getIdNo()); 
+        rotas[i].capacidadeAtual = capacidadeCaminhao; 
+    }
+
+    for (int i = 0; i < numCaminhoes; i++) {
+        No *noAtual = deposito; 
 
 
+        int custoDaRota = 0;
+        while (true) {
+            float menorDistancia = numeric_limits<float>::max();
+            int proxNo = -1;
+            
+            for (int j = 1; j <= p->getDimensao(); j++) {
+                No *possivelProximoNo = grafo->buscaNo(j);
+                if (!possivelProximoNo->getVisitado() && matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1] < menorDistancia &&
+                    possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual) {
+                    menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
+                    proxNo = possivelProximoNo->getIdNo();
+                    custoDaRota += menorDistancia;
+                }
+            }
 
+            if (proxNo == -1) {
+                rotas[i].nos.push_back(deposito->getIdNo());
+                break;
+            }
+
+            No *proximoNo = grafo->buscaNo(proxNo);
+            proximoNo->setVisitado(true);
+            rotas[i].nos.push_back(proximoNo->getIdNo());
+            rotas[i].capacidadeAtual -= proximoNo->getDemanda();
+            noAtual = proximoNo;
+        }
+
+        rotas[i].nos.push_back(rotas[i].capacidadeAtual);
+        rotas[i].nos.push_back(custoDaRota);
+        this->custoTotal += custoDaRota;
+ 
+    }
+
+    vector<vector<int>> resultado;
+    for (const auto &rota : rotas) {
+        resultado.push_back(rota.nos);
+    }
+
+    No *n = p->getGrafo()->getRaiz();
+
+    while(n != nullptr){
+        if(n->getVisitado() == false){
+            cout<<"Solução invalida, nó "<< n->getIdNo() << " não visistado!" <<endl;
+        }
+        n = n->getProxNo();
+    }
+ 
+    this->resultado = resultado;
+
+    return this->resultado;
+}*/

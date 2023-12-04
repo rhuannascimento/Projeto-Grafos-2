@@ -33,7 +33,7 @@ public:
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
     //vector<Aresta> gulosoAdptativo();
-    vector<vector<int>> gulosoReativo(float parametroReativo);
+    vector<vector<int>> gulosoReativo(float parametroAlpha, float parametroProbabilidadeInicial, int parametroTamanhoListaCandidatos);
     
 };
 
