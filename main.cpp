@@ -9,6 +9,7 @@ using namespace std;
 int main()
 {
     int menu = 0;
+    
 
     while (menu != 9)
     {
@@ -66,6 +67,10 @@ int main()
                 cout
                     << "Custo Total: " << s->getCustoTotal() << endl;
                 cout << "Solucao Otimo: " << p->getSolucaoOtima() << endl;
+
+                double porcentagemAcimaOtimo = ((s->getCustoTotal() - p->getSolucaoOtima()) / p->getSolucaoOtima()) * 100;
+                cout << "Valor acima da Solucao Otima: " << (s->getCustoTotal() - p->getSolucaoOtima()) << " que tem porcentagem: " << porcentagemAcimaOtimo << "%" << std::endl;
+
 
                 if (!v->validar())
                 {

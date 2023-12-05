@@ -47,16 +47,19 @@ vector<vector<int>> Solucao::guloso()
                 {
                     menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
                     proxNo = possivelProximoNo->getIdNo();
-                    custoDaRota += menorDistancia;
+                    
                 }
             }
 
+            
             if (proxNo == -1)
             {
                 rotas[i].nos.push_back(deposito->getIdNo());
+                custoDaRota += matrizDistancia[noAtual->getIdNo() -1 ][0];
                 break;
             }
 
+            custoDaRota += menorDistancia;
             No *proximoNo = grafo->buscaNo(proxNo);
             proximoNo->setVisitado(true);
             rotas[i].nos.push_back(proximoNo->getIdNo());
