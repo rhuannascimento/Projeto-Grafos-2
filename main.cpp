@@ -34,11 +34,12 @@ int main()
                 case 1:
                     rotas = s->guloso();
                     break;
-                case 2:
-                    rotas =  s->gulosoAdptativo(0.37, 1000);
+                case 2:         
+                        rotas =  s->gulosoAdptativo(0.37, 10);
                     break;
                 case 3:
-                    //rotas = s->gulosoReativo(8.5, 7.3, 20);
+                    vector<float> alfas = {0.1, 0.7, 0.5, 0.8, 0.3};
+                    rotas = s->gulosoReativo(alfas, 10, 20);
                     break;
                 }
                 
