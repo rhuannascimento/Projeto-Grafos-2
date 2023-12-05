@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <queue>
 #include <algorithm>
 #include <random>
 //#include "Aresta.h"
