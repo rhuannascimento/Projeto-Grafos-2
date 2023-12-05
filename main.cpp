@@ -34,7 +34,7 @@ int main()
                     rotas = s->guloso();
                     break;
                 case 2:
-                    rotas =  s->gulosoAdptativo(0.7, 1000);
+                    rotas =  s->gulosoAdptativo(0.3, 1000);
                     break;
                 case 3:
                     //rotas = s->gulosoReativo(8.5, 7.3, 20);

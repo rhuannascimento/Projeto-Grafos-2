@@ -84,6 +84,11 @@ vector<vector<int>> Solucao::guloso() {
     return this->resultado;
 }
 
+
+int randomRange(int min, int max) {
+    return min + rand() % (max - min + 1);
+}
+
 vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter) {
     vector<vector<int>> solBest; // Melhor solução encontrada
     float custoBest = numeric_limits<float>::max(); // Custo da melhor solução
@@ -124,7 +129,8 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter) {
                 if (!candidatosViaveis.empty()) {
                     // Calcula probabilidades para os candidatos
                     random_shuffle(candidatosViaveis.begin(), candidatosViaveis.end());
-                    int k = static_cast<int>(alfa * candidatosViaveis.size());
+                    int k = randomRange(0, alfa * candidatosViaveis.size() - 1);
+
                     int escolha = candidatosViaveis[k];
 
                     // Atualiza rota e capacidade
