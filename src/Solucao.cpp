@@ -98,40 +98,35 @@ int randomRange(int min, int max)
 
 vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 {
-    vector<vector<int>> solBest;                    // Melhor solução encontrada
-    float custoBest = numeric_limits<float>::max(); // Custo da melhor solução
+    vector<vector<int>> solBest;
+    float custoBest = numeric_limits<float>::max(); 
 
-    // Obtendo informações do problema
     int numCaminhoes = p->getNumCaminhoes();
     int capacidadeCaminhao = p->getCapacidadeCaminhao();
     vector<vector<float>> matrizDistancia = p->getMatrizDistancia();
     Grafo *grafo = p->getGrafo();
 
-    // Iterações do algoritmo
     for (int i = 0; i < numIter; ++i)
     {
-        vector<int> clientesRestantes; // Lista de clientes não visitados
+        vector<int> clientesRestantes; 
         for (int j = 2; j <= p->getDimensao(); ++j)
         {
             clientesRestantes.push_back(j);
         }
 
-        vector<vector<int>> rotas; // Armazenar as rotas dos caminhões
+        vector<vector<int>> rotas;
 
-        // Construir rotas para cada caminhão
         for (int caminhao = 0; caminhao < numCaminhoes; ++caminhao)
         {
             float capacidadeAtual = capacidadeCaminhao;
             vector<int> rota;
             int custoDaRota = 0;
-            int atual = 1; // Começar do depósito
-
+            int atual = 1; 
             rota.push_back(1);
 
-            // Construir uma rota
             while (!clientesRestantes.empty())
             {
-                vector<pair<float, int>> candidatosViaveis; // Candidatos viáveis para próxima visita
+                vector<pair<float, int>> candidatosViaveis; 
                 for (int cliente : clientesRestantes)
                 {
                     if (capacidadeAtual - grafo->buscaNo(cliente)->getDemanda() >= 0)
@@ -142,8 +137,7 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 
                 if (!candidatosViaveis.empty())
                 {
-                    // Calcula probabilidades para os candidatos
-                    std::sort(candidatosViaveis.begin(), candidatosViaveis.end(),
+                    sort(candidatosViaveis.begin(), candidatosViaveis.end(),
                               [](const auto &a, const auto &b)
                               {
                                   return a.first < b.first;
@@ -153,28 +147,24 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 
                     int escolha = candidatosViaveis[k].second;
 
-                    // Atualiza rota e capacidade
                     rota.push_back(escolha);
 
                     atual = escolha;
                     capacidadeAtual -= grafo->buscaNo(escolha)->getDemanda();
 
-                    // Remove cliente da lista de não visitados
                     clientesRestantes.erase(find(clientesRestantes.begin(), clientesRestantes.end(), escolha));
                 }
                 else
                 {
-                    break; // Não há mais clientes viáveis para essa rota
+                    break; 
                 }
             }
 
-            // Adiciona o depósito no final da rota
             rota.push_back(1);
             rota.push_back(capacidadeAtual);
             rotas.push_back(rota);
         }
 
-        // Calcular custo total das rotas
         int custoTotal = 0;
         for (auto &rota : rotas)
         {
@@ -191,7 +181,6 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 
         bool valido = v->validar();
 
-        // Atualizar a melhor solução encontrada
         if (custoTotal < custoBest && valido)
         {
             solBest = rotas;
