@@ -1,7 +1,7 @@
 #include "../include/Valida.h"
 
-Valida::Valida(Solucao *s, Problema *p){
-    this->s = s;
+Valida::Valida(vector<vector<int>> resultado, Problema *p){
+    this->resultado = resultado;
     this->p = p;
 }
 
@@ -19,7 +19,7 @@ bool Valida::validar(){
 
 bool Valida::validarTodosPresente(){
     Grafo *g = this->p->getGrafo();
-    vector<vector<int>> resultado = this->s->getResultado();
+    vector<vector<int>> resultado = this->resultado;
 
     No *no = g->getRaiz();
     bool encontrado;
@@ -58,7 +58,7 @@ bool Valida::validarTodosPresente(){
 
 bool Valida::validarUnicoDeRota(){
     Grafo *g = this->p->getGrafo();
-    vector<vector<int>> resultado = this->s->getResultado();
+    vector<vector<int>> resultado = this->resultado;
 
     int contador = 0;
     No *no = g->getRaiz();
