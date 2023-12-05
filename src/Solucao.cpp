@@ -110,6 +110,8 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter) {
             int custoDaRota = 0;
             int atual = 1; // Começar do depósito
 
+            rota.push_back(1);
+
             // Construir uma rota
             while (!clientesRestantes.empty()) {
                 vector<int> candidatosViaveis; // Candidatos viáveis para próxima visita
@@ -123,11 +125,11 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter) {
                     // Calcula probabilidades para os candidatos
                     random_shuffle(candidatosViaveis.begin(), candidatosViaveis.end());
                     int k = static_cast<int>(alfa * candidatosViaveis.size());
-                    int escolha = candidatosViaveis[0];
+                    int escolha = candidatosViaveis[k];
 
                     // Atualiza rota e capacidade
                     rota.push_back(escolha);
-                    custoDaRota += matrizDistancia[escolha - 1][0];
+    
                     atual = escolha;
                     capacidadeAtual -= grafo->buscaNo(escolha)->getDemanda();
 
@@ -141,16 +143,18 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter) {
             // Adiciona o depósito no final da rota
             rota.push_back(1);
             rota.push_back(capacidadeAtual);
-            rota.push_back(custoDaRota);
             rotas.push_back(rota);
         }
 
         // Calcular custo total das rotas
         int custoTotal = 0;
-        for (const auto& rota : rotas) {
-            for (size_t i = 1; i < rota.size() - 2; ++i) {
-                custoTotal += matrizDistancia[rota[i - 1] - 1][rota[i] - 1];
+        for (auto& rota : rotas) {
+            int custoRota = 0;
+            for (size_t i = 1; i < rota.size() - 1; ++i) {
+                custoRota += matrizDistancia[rota[i - 1] - 1][rota[i] - 1];          
             }
+            rota.push_back(custoRota);
+            custoTotal += custoRota;
         }
 
         Valida *v = new Valida(rotas, this->p);
