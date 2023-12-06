@@ -43,16 +43,11 @@ int main(int argc, char *argv[])
     }
     else if (algoritmo == 2 && alfa != 0)
     {
-        rotas = s->gulosoAdptativo(alfa, 10);
+        rotas = s->gulosoAdptativo(alfa, numInteracoes);
     }
     else if (algoritmo == 3 && numInteracoes != 0)
     {
-        int tam = 20;
-        vector<float> alfas;
-        for (int i = 0; i < tam; ++i)
-        {
-            alfas.push_back(1.0f / tam);
-        }
+        vector<float> alfas = {0.1, 0.7, 0.5, 0.8, 0.3};
         rotas = s->gulosoReativo(alfas, numInteracoes, 20);
     }
     else
