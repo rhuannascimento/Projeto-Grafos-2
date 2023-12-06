@@ -35,7 +35,7 @@ public:
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
     vector<vector<int>> gulosoAdptativo(float alfa, int numIter);
-    //vector<vector<int>> gulosoReativo(float parametroAlpha, float parametroProbabilidadeInicial, int parametroTamanhoListaCandidatos);
+    vector<vector<int>> gulosoReativo(vector<float> alfas, int numIter, int bloco);
     
 };
 
