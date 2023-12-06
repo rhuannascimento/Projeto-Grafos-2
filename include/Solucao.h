@@ -3,10 +3,12 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <queue>
 #include <algorithm>
 #include <random>
 //#include "Aresta.h"
 #include "Problema.h"
+#include "Valida.h"
 #include "No.h"
 
 using namespace std;
@@ -32,8 +34,8 @@ public:
     vector<vector<int>> getResultado(){return resultado;};
     float getComparacao(){return comparacao;};
     float getCustoTotal(){return custoTotal;};
-    //vector<Aresta> gulosoAdptativo();
-    vector<vector<int>> gulosoReativo(float parametroAlpha, float parametroProbabilidadeInicial, int parametroTamanhoListaCandidatos);
+    vector<vector<int>> gulosoAdptativo(float alfa, int numIter);
+    vector<vector<int>> gulosoReativo(vector<float> alfas, int numIter, int bloco);
     
 };
 

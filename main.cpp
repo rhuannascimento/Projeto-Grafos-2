@@ -6,80 +6,106 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    int menu = 0;
+    
+    if(argc != 6){
+        cout << "ERRO: quantidade de parametros invalidos";
+        return 0;
+    }
 
-    while (menu != 9)
+    // declaracoes de entrada
+    string arquivo_entrada = argv[1];
+    int algoritmo = stoi(argv[2]);
+    float alfa = stof(argv[3]);
+    int numInteracoes = stoi(argv[4]);
+    string saida = argv[5];
+    string result;
+    
+    // ARQUIVO SAIDA
+    ofstream arquivo_saida(saida, std::ios::app);
+    if (!(arquivo_saida.is_open()))
     {
-        cout << "====================================================================================================================================================" << endl;
-        cout << "escolha uma opcao de algoritmo:" << endl;
-        cout << "|1| Algoritmo guloso" << endl;
-        cout << "|2| Algoritmo Guloso randomizado adaptativo" << endl;
-        cout << "|3| Algoritmo Guloso randomizado adaptativo reativo" << endl;
-        cout << "|9| Sair" << endl;
-        cin >> menu;
-        if (menu!=9)
+        cout << "Erro ao abrir o arquivo de saída." << endl;
+        return 0;
+    }
+    
+    cout << "===================================================================================================================================================================================" << endl;
+
+    // declaracoes do algoritmo
+    Problema *p = new Problema("instancias/" + arquivo_entrada);
+    Solucao *s = new Solucao(p);
+    vector<vector<int>> rotas;
+
+    if (algoritmo == 1)
+    {
+        rotas = s->guloso();
+    }
+    else if (algoritmo == 2 && alfa != 0)
+    {
+        rotas = s->gulosoAdptativo(alfa, 10);
+    }
+    else if (algoritmo == 3 && numInteracoes != 0)
+    {
+        int tam = 20;
+        vector<float> alfas;
+        for (int i = 0; i < tam; ++i)
         {
+            alfas.push_back(1.0f / tam);
+        }
+        rotas = s->gulosoReativo(alfas, numInteracoes, 20);
+    }
+    else
+    {
+        cout << "Algum valor de entrada esta invalido";
+        return 0;
+    }
 
-            for (int x = 1; x <= 10; x++)
+    result = "========================================================== Instancia " + arquivo_entrada + " ===============================================================================================\n";
+    Valida *v = new Valida(rotas, p);
+
+    for (size_t i = 0; i < rotas.size(); ++i)
+    {
+        result += "Rota " + to_string(i + 1) + ": ";
+        for (size_t j = 0; j < rotas[i].size(); ++j)
+        {
+            if (j == rotas[i].size() - 2)
             {
-                cout << "==========================================================Instancia " << x << "===============================================================================================" << endl;
-                Problema *p = new Problema("instancias/" + to_string(x) + ".txt");
-                Solucao *s = new Solucao(p);
-                vector<vector<int>> rotas;
-                switch (menu)
-                {
-                case 1:
-                    rotas = s->guloso();
-                    break;
-                case 2:
-                    rotas = s->guloso();
-                    break;
-                case 3:
-                    rotas = s->gulosoReativo(8.5, 7.3, 20);
-                    break;
-                }
-                Valida *v = new Valida(s, p);
-
-                for (size_t i = 0; i < rotas.size(); ++i)
-                {
-                    cout << "Rota " << i + 1 << ": ";
-                    for (size_t j = 0; j < rotas[i].size(); ++j)
-                    {
-                        if (j == rotas[i].size() - 2)
-                        {
-                            cout << "Capacidade sobrando: ";
-                        }
-                        else if (j == rotas[i].size() - 1)
-                        {
-                            cout << "Custo da rota: ";
-                        }
-
-                        cout
-                            << rotas[i][j] << " ";
-                    }
-                    cout
-                        << endl;
-                }
-                cout
-                    << "Custo Total: " << s->getCustoTotal() << endl;
-                cout << "Solucao Otimo: " << p->getSolucaoOtima() << endl;
-
-                if (!v->validar())
-                {
-                    if (!v->getAtendeuTodos())
-                    {
-                        cout << "A solução não atendeu todos os clientes!" << endl;
-                    }
-                    if (!v->getUnicoEmRota())
-                    {
-                        cout << "Os nós não são únicos nas rotas!" << endl;
-                    }
-                }
+                result += "Capacidade sobrando: ";
             }
+            else if (j == rotas[i].size() - 1)
+            {
+                result += "Custo da rota: ";
+            }
+
+            result += to_string(rotas[i][j]) + " ";
+        }
+        result += "\n";
+    }
+    result += "Custo Total: " + to_string(s->getCustoTotal()) + "\n";
+    result += "Solucao Otimo: " + to_string(p->getSolucaoOtima()) + "\n";
+
+    //porcentagem diferenca
+    double porcentagemAcimaOtimo = ((s->getCustoTotal() - p->getSolucaoOtima()) / p->getSolucaoOtima()) * 100;
+    result += "Valor acima da Solucao Otima: " + to_string(s->getCustoTotal() - p->getSolucaoOtima()) + " que tem porcentagem: " + to_string(porcentagemAcimaOtimo) + "% \n";
+
+    //validacao
+    if (!v->validar())
+    {
+        if (!v->getAtendeuTodos())
+        {
+            result += "A solução não atendeu todos os clientes! \n";
+        }
+        if (!v->getUnicoEmRota())
+        {
+            result += "Os nós não são únicos nas rotas!\n";
         }
     }
+
+    // ARQUIVO DE SAIDA
+    arquivo_saida << result << std::endl;
+    arquivo_saida.close();
+    cout << "String escrita no arquivo com sucesso." << endl;
 
     return 0;
 }
