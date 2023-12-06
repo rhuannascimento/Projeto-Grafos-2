@@ -1,16 +1,29 @@
 #include "../include/Solucao.h"
 
+/**
+ * @brief Construtor da classe Solucao.
+ * @param p Ponteiro para o objeto da classe Problema associado à solução.
+ */
 Solucao::Solucao(Problema *p)
 {
     this->p = p;
 }
 
+/**
+ * @brief Estrutura que representa uma rota no sistema.
+ *
+ * Uma rota é definida por uma sequência de nós e sua capacidade atual.
+ */
 struct Rota
 {
     vector<int> nos;
     int capacidadeAtual;
 };
 
+/**
+ * @brief Implementação do algoritmo guloso para resolver um problema de roteirização.
+ * @return Uma matriz representando as rotas calculadas pelo algoritmo.
+ */
 vector<vector<int>> Solucao::guloso()
 {
     int numCaminhoes = p->getNumCaminhoes();
@@ -92,11 +105,23 @@ vector<vector<int>> Solucao::guloso()
     return this->resultado;
 }
 
+/**
+ * @brief Gera um número aleatório dentro de um intervalo [min, max].
+ * @param min Valor mínimo do intervalo.
+ * @param max Valor máximo do intervalo.
+ * @return Número aleatório gerado.
+ */
 int randomRange(int min, int max)
 {
     return min + rand() % (max - min + 1);
 }
 
+/**
+ * @brief Executa o algoritmo de construção de rotas guloso adaptativo.
+ * @param alfa Parâmetro de controle da probabilidade de escolha do melhor candidato (0 <= alfa <= 1).
+ * @param numIter Número de iterações do algoritmo.
+ * @return Uma solução de rotas gerada pelo algoritmo.
+ */
 vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 {
     vector<vector<int>> solBest;
@@ -193,6 +218,14 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
     return solBest;
 }
 
+/**
+ * @brief Executa o algoritmo de construção gulosa reativa.
+ * 
+ * @param alfas Vetor de parâmetros alfa para ajuste das probabilidades.
+ * @param numIter Número total de iterações do algoritmo.
+ * @param bloco Número de iterações entre as atualizações das probabilidades.
+ * @return Vetor representando a melhor solução encontrada.
+ */
 vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int bloco) {
     vector<float> probabilidades(alfas.size(), 1.0 / alfas.size()); // Inicialização das probabilidades
 
@@ -325,51 +358,3 @@ vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int
     return melhorSolucaoEncontrada;
 }
 
-
-
-// void inicializaVetores(float P[], float M[], int m)
-// {
-// }
-
-// void atualizaProbabilidades(float p[], float m[], float alfa[], vector<vector<int>> &solBest)
-// {
-//     float *q = new float[tam];
-
-//     for (int i = 0; i < tam; i++)
-//     {
-//         q[i] = solBest / m[i];
-//     }
-
-//     float qSum = 0;
-//     for (int j = 0; j < tam; j++)
-//         qSum += q[j];
-
-//     for (int i = 0; i < tam; i++)
-//         p[i] = q[i] / qSum;
-
-//     delete[] q;
-// }
-
-
-// vector<vector<int>> Solucao::gulosoReativo(float alfa[], int numIter, int bloco)
-// {
-//     vector<vector<int>> solBest;
-//     Solucao S(nullptr);
-//     int i = 1;
-//     int k;
-
-//     vector<float> probabilidade;
-//     vector<float> medias;
-
-//     inicializaVetores(probabilidade, medias, alfa.size());
-
-//     while (i < numIter)
-//     {
-//         if (i % bloco == 0)
-//         {
-//             atualizaProbabilidades(probabilidade, medias, alfa, solBest);
-//         }
-//     }
-
-//     return solBest;
-// }
