@@ -14,6 +14,8 @@ Para executar este código, siga os passos abaixo:
     ./main {ArquivoDeEntrada} {AlgoritmoDeSuaEscolha} {Alfa (Se Adaptativo ou Reativo)} {NúmeroDeInterações (Se Adaptativo ou Reativo)} {arquivoSaida}
     ```
 
+    **Ops.: É necessário passar os parâmetros alfa e número de interações mesmo nos algoritimos que não necessitam deles(basta mandar 0)**
+
 ## Lista de algoritmos disponíveis:
 
 - **1 => Guloso**
