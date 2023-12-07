@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     else if (algoritmo == 3 && numInteracoes != 0)
     {
         vector<float> alfas = {0.1, 0.7, 0.5, 0.8, 0.3};
-        rotas = s->gulosoReativo(alfas, numInteracoes, 20);
+        rotas = s->gulosoReativo(alfas, numInteracoes, static_cast<int>(numInteracoes * 0.10));
     }
     else
     {

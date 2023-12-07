@@ -1,5 +1,5 @@
 NAME : 	X-n101-k25	
-COMMENT : 	(Augerat et al, No of trucks: 25, Optimal value: 27591)	
+COMMENT : 	(Augerat et al, No of trucks: 26, Optimal value: 27591)	
 TYPE : 	CVRP	
 DIMENSION : 	101	
 EDGE_WEIGHT_TYPE : 	EUC_2D	

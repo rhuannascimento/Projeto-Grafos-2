@@ -21,6 +21,17 @@ struct Rota
 };
 
 /**
+ * @brief Gera um número aleatório dentro de um intervalo [min, max].
+ * @param min Valor mínimo do intervalo.
+ * @param max Valor máximo do intervalo.
+ * @return Número aleatório gerado.
+ */
+int randomRange(int min, int max)
+{
+    return min + rand() % (max - min + 1);
+}
+
+/**
  * @brief Implementação do algoritmo guloso para resolver um problema de roteirização.
  * @return Uma matriz representando as rotas calculadas pelo algoritmo.
  */
@@ -54,13 +65,15 @@ vector<vector<int>> Solucao::guloso()
 
             for (int j = 1; j <= p->getDimensao(); j++)
             {
-                No *possivelProximoNo = grafo->buscaNo(j);
-                if (!possivelProximoNo->getVisitado() && matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1] < menorDistancia &&
-                    possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual)
-                {
-                    menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
-                    proxNo = possivelProximoNo->getIdNo();
-                }
+                
+                    No *possivelProximoNo = grafo->buscaNo(j);
+                    if (!possivelProximoNo->getVisitado() && matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1] < menorDistancia &&
+                        possivelProximoNo->getDemanda() <= rotas[i].capacidadeAtual)
+                    {
+                        menorDistancia = matrizDistancia[noAtual->getIdNo() - 1][possivelProximoNo->getIdNo() - 1];
+                        proxNo = possivelProximoNo->getIdNo();
+                    }
+                
             }
 
             if (proxNo == -1)
@@ -103,17 +116,6 @@ vector<vector<int>> Solucao::guloso()
     this->resultado = resultado;
 
     return this->resultado;
-}
-
-/**
- * @brief Gera um número aleatório dentro de um intervalo [min, max].
- * @param min Valor mínimo do intervalo.
- * @param max Valor máximo do intervalo.
- * @return Número aleatório gerado.
- */
-int randomRange(int min, int max)
-{
-    return min + rand() % (max - min + 1);
 }
 
 /**
@@ -229,22 +231,24 @@ vector<vector<int>> Solucao::gulosoAdptativo(float alfa, int numIter)
 vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int bloco) {
     vector<float> probabilidades(alfas.size(), 1.0 / alfas.size()); // Inicialização das probabilidades
 
-    float melhorSolucao = numeric_limits<float>::max(); // Valor inicial alto para a melhor solução
-    int indiceMelhorAlfa = 0; // Índice do melhor alfa
+    float melhorSolucao = numeric_limits<float>::max();
+    int indiceMelhorAlfa = 0; 
     vector<vector<int>> melhorSolucaoEncontrada;
-    vector<float> medias(alfas.size(), p->getSolucaoOtima());
+    
+    vector<float> medias(alfas.size(), 0);
+    vector<int> contandorMedia(alfas.size(), 0);
 
     for (int iteracao = 1; iteracao <= numIter; ++iteracao) {
+
         if (iteracao % bloco == 0) {
-            // Atualização das probabilidades
             float somatorio = 0.0;
             for (int j = 0; j < alfas.size(); ++j) {
-                float qj = pow((melhorSolucao / medias[j]), alfas[j]);
+                float qj = pow((melhorSolucao / (medias[j] / contandorMedia[j])), alfas[j]);
                 somatorio += qj;
             }
 
             for (int i = 0; i < probabilidades.size(); ++i) {
-                float qi = pow((melhorSolucao / medias[i]), alfas[i]);
+                float qi = pow((melhorSolucao / (medias[i] / contandorMedia[i])), alfas[i]);
                 probabilidades[i] = qi / somatorio;
             }
         }
@@ -255,7 +259,7 @@ vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int
         int indiceEscolhido = 0;
 
         for (int i = 0; i < probabilidades.size(); ++i) {
-            acumulado += probabilidades[i] * 100; // Multiplica por 100 para usar o intervalo de 0 a 100
+            acumulado += probabilidades[i] * 100; 
             if (randomValue <= acumulado) {
                 indiceEscolhido = i;
                 break;
@@ -265,7 +269,7 @@ vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int
         float alfaEscolhido = alfas[indiceEscolhido];
         vector<int> clientesRestantes; 
 
-        //////////////////////////////////////////////
+      
         for (int j = 2; j <= p->getDimensao(); ++j)
         {
             clientesRestantes.push_back(j);
@@ -345,16 +349,14 @@ vector<vector<int>> Solucao::gulosoReativo(vector<float> alfas, int numIter, int
             indiceMelhorAlfa = indiceEscolhido;
             this->custoTotal = melhorSolucao;
         }
-        // e atualizar as informações conforme necessário, como a melhor solução encontrada
-        // e os valores de medias[].
-        medias[indiceEscolhido] = (medias[indiceEscolhido] + custoTotal) / 2;
-        // ...
+       
 
-        // Atualização da melhor solução e índice do melhor alfa
+        medias[indiceEscolhido] = (medias[indiceEscolhido] + custoTotal);
+        contandorMedia[indiceEscolhido] += 1;
+       
         
     }
 
-    // Retorne a melhor solução encontrada até o momento
     return melhorSolucaoEncontrada;
 }
 
