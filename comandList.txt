@@ -1,4 +1,4 @@
-## Arquivo_entrada  <<  lgoritmo_a_ser_usado  <<  alfa  <<  numero_iteracoes  << arquivo_saida   ##
+## Arquivo_entrada  <<  algoritmo_a_ser_usado  <<  alfa  <<  numero_iteracoes  << arquivo_saida   ##
 
 
 g++ -g main.cpp ./src/*.cpp -o ./main && ./main A-n34-k5.txt 1 0.37 10 arquivoSaida.txt
