@@ -11,7 +11,8 @@ Grafo::Grafo()
  * @param y Coordenada y do nó.
  * @return Ponteiro para o nó recém-inserido.
  */
-No *Grafo::insereNo(int idNo, float x, float y){
+No *Grafo::insereNo(int idNo, float x, float y)
+{
 
     No *novoNo = new No(idNo, x, y);
 
@@ -31,7 +32,8 @@ No *Grafo::insereNo(int idNo, float x, float y){
 /**
  * @brief Função para imprimir os nós do grafo.
  */
-void Grafo::imprimeGrafo(){
+void Grafo::imprimeGrafo()
+{
     No *no = this->raiz;
     while (no != nullptr)
     {
@@ -45,7 +47,8 @@ void Grafo::imprimeGrafo(){
  * @param idNo O ID do nó a ser buscado.
  * @return Um ponteiro para o nó encontrado ou nullptr se não for encontrado.
  */
-No* Grafo::buscaNo(int idNo){
+No *Grafo::buscaNo(int idNo)
+{
     No *no = this->raiz;
 
     while (no != nullptr)

@@ -8,8 +8,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    
-    if(argc != 6){
+
+    if (argc != 6)
+    {
         cout << "ERRO: quantidade de parametros invalidos";
         return 0;
     }
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
     int numInteracoes = stoi(argv[4]);
     string saida = argv[5];
     string result;
-    
+
     // ARQUIVO SAIDA
     ofstream arquivo_saida(saida, std::ios::app);
     if (!(arquivo_saida.is_open()))
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         cout << "Erro ao abrir o arquivo de saída." << endl;
         return 0;
     }
-    
+
     cout << "===================================================================================================================================================================================" << endl;
 
     // declaracoes do algoritmo
@@ -80,11 +81,11 @@ int main(int argc, char *argv[])
     result += "Custo Total: " + to_string(s->getCustoTotal()) + "\n";
     result += "Solucao Otimo: " + to_string(p->getSolucaoOtima()) + "\n";
 
-    //porcentagem diferenca
+    // porcentagem diferenca
     double porcentagemAcimaOtimo = ((s->getCustoTotal() - p->getSolucaoOtima()) / p->getSolucaoOtima()) * 100;
     result += "Valor acima da Solucao Otima: " + to_string(s->getCustoTotal() - p->getSolucaoOtima()) + " que tem porcentagem: " + to_string(porcentagemAcimaOtimo) + "% \n";
 
-    //validacao
+    // validacao
     if (!v->validar())
     {
         if (!v->getAtendeuTodos())

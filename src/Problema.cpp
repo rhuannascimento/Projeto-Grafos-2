@@ -125,14 +125,16 @@ void Problema::auxLer(string nomeArquivo)
  * @param y2 A coordenada y do segundo ponto.
  * @return A distância euclidiana entre os dois pontos.
  */
-float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2) {
+float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2)
+{
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 /**
  * @brief Calcula a matriz de distâncias entre os nós do grafo.
  */
-void Problema::calculaMatrizDitancia(){
+void Problema::calculaMatrizDitancia()
+{
 
     this->matrizDistancia = vector<vector<float>>(this->dimensao, vector<float>(this->dimensao));
 
