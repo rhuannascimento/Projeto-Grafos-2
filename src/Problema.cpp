@@ -2,6 +2,10 @@
 
 using namespace std;
 
+/**
+ * @brief Construtor da classe Problema.
+ * @param nomeArquivo Nome do arquivo contendo informações para inicialização.
+ */
 Problema::Problema(string nomeArquivo)
 {
 
@@ -11,6 +15,10 @@ Problema::Problema(string nomeArquivo)
     this->calculaMatrizDitancia();
 }
 
+/**
+ * @brief Função auxiliar para ler informações de um arquivo.
+ * @param nomeArquivo Nome do arquivo a ser lido.
+ */
 void Problema::auxLer(string nomeArquivo)
 {
     ifstream arquivo(nomeArquivo);
@@ -109,13 +117,22 @@ void Problema::auxLer(string nomeArquivo)
     arquivo.close();
 }
 
-float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2)
-{
+/**
+ * @brief Calcula a distância euclidiana entre dois pontos no plano.
+ * @param x1 A coordenada x do primeiro ponto.
+ * @param y1 A coordenada y do primeiro ponto.
+ * @param x2 A coordenada x do segundo ponto.
+ * @param y2 A coordenada y do segundo ponto.
+ * @return A distância euclidiana entre os dois pontos.
+ */
+float Problema::calcularDistanciaEuclidiana(float x1, float y1, float x2, float y2) {
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
-void Problema::calculaMatrizDitancia()
-{
+/**
+ * @brief Calcula a matriz de distâncias entre os nós do grafo.
+ */
+void Problema::calculaMatrizDitancia(){
 
     this->matrizDistancia = vector<vector<float>>(this->dimensao, vector<float>(this->dimensao));
 

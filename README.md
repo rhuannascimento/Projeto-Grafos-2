@@ -1,3 +1,31 @@
+# Como Executar
+
+Para executar este código, siga os passos abaixo:
+
+1. **Compilação do código:** Utilize o seguinte comando para compilar o código-fonte:
+
+    ```
+    g++ -g main.cpp ./src/*.cpp -o ./main
+    ```
+
+2. **Execução do programa:** Após a compilação bem-sucedida, execute o programa com o seguinte comando:
+
+    ```
+    ./main {ArquivoDeEntrada} {AlgoritmoDeSuaEscolha} {Alfa (Se Adaptativo ou Reativo)} {NúmeroDeInterações (Se Adaptativo ou Reativo)} {arquivoSaida}
+    ```
+
+    **Ops.: É necessário passar os parâmetros alfa e número de interações mesmo nos algoritimos que não necessitam deles(basta mandar 0)**
+
+## Lista de algoritmos disponíveis:
+
+- **1 => Guloso**
+- **2 => Guloso Randomizado Adaptativo**
+- **3 => Guloso Randomizado Adaptativo Reativo**
+
+Outra forma de rodar o programa é inserir o comando desejado no arquivo `exec.sh` e executar o arquivo usando `./exec.sh` (no Linux, talvez seja necessário permissão de execução usando `chmod`).
+
+Lembre-se de substituir `{ArquivoDeEntrada}`, `{AlgoritmoDeSuaEscolha}`, `{Alfa}`, `{NúmeroDeInterações}` e `{arquivoSaida}` pelos valores correspondentes que você deseja utilizar.
+
 # Especificação da Atividade Avaliativa
 
 ## Trabalho Prático em Grupo - Etapa 2

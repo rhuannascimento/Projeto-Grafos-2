@@ -3,10 +3,12 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <queue>
 #include <algorithm>
 #include <random>
 // #include "Aresta.h"
 #include "Problema.h"
+#include "Valida.h"
 #include "No.h"
 #include <cstdlib>
 #include <ctime>
@@ -34,11 +36,12 @@ public:
     float getComparacao() { return comparacao; };
     float getCustoTotal() { return custoTotal; };
     vector<vector<int>> guloso();
-    vector<vector<int>> gulosoAdptativo();
-
-    vector<vector<int>> gulosoReativo(float parametroReativo);
-
-    float getAleatorio() { return static_cast<float>(rand()) / RAND_MAX; }
+    vector<vector<int>> getResultado(){return resultado;};
+    float getComparacao(){return comparacao;};
+    float getCustoTotal(){return custoTotal;};
+    vector<vector<int>> gulosoAdptativo(float alfa, int numIter);
+    vector<vector<int>> gulosoReativo(vector<float> alfas, int numIter, int bloco);
+    
 };
 
 #endif // SOLUCAO_H

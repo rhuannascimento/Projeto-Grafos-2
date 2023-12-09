@@ -1,28 +1,44 @@
 #include "../include/No.h"
 
-No::No(int id, float x, float y)
-{
+/**
+ * @brief Construtor da classe No.
+ * @param id Identificador único do nó.
+ * @param x Coordenada x do nó.
+ * @param y Coordenada y do nó.
+ */
+No::No(int id, float x, float y){
     this->idNo = id;
     this->x = x;
     this->y = y;
 }
 
-void No::setProxNo(No *no)
-{
+/**
+ * @brief Define o próximo nó na lista.
+ * @param no Ponteiro para o próximo nó.
+ */
+void No::setProxNo(No *no){
     this->proxNo = no;
 }
 
-void No::setDemanda(int demanda)
-{
+/**
+ * @brief Define a demanda associada ao nó.
+ * @param demanda Valor da demanda.
+ */
+void No::setDemanda(int demanda){
     this->demanda = demanda;
 }
 
-void No::setDeposito()
-{
+/**
+ * @brief Marca o nó como um depósito.
+ */
+void No::setDeposito(){
     this->deposito = true;
 }
 
-void No::setVisitado(bool visitado)
-{
+/**
+ * @brief Define se o nó foi visitado.
+ * @param visitado Valor booleano indicando se o nó foi visitado.
+ */
+void No::setVisitado(bool visitado){
     this->visitado = visitado;
 }

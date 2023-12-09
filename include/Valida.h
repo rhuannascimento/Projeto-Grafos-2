@@ -12,14 +12,17 @@ class Solucao;
 class Valida
 {
 private:
-    Solucao *s;
+    
+    
+    vector<vector<int>> resultado;
     Problema *p;
     bool resultadoValidacao;
     bool atendeuTodos = false;
     bool unicoEmRota = false;
 
 public:
-    Valida(Solucao *s, Problema *p);
+    
+    Valida(vector<vector<int>> resultao, Problema *p);
     ~Valida();
 
     bool validar();
